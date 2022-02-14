@@ -1,0 +1,25 @@
+.navbar{
+    background-color: whitesmoke;
+    border-radius: 0px 10px 10px 0px;
+    width:6%;
+    
+}
+
+.navbar_container{
+  text-align: center;
+}
+
+.navbar i{
+    color:#07051a;
+    font-size: 40px;
+    padding:3%;
+    transition: all 0.4s;
+}
+.navbar i:hover{
+    font-size:60px;
+}
+
+.navbar span{
+    text-decoration: none;
+    display: hidden;
+}
