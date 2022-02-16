@@ -1,5 +1,5 @@
 .navbar{
-    background-color: whitesmoke;
+    background-color:#3c424b;
     position: relative;
     border-radius: 0px 10px 10px 0px;
     width:100px;
@@ -13,11 +13,11 @@
 }
 
 .navbar i{
-    color:#07051a;
+    color:#cfcfcf;
     font-size: 30px;
     padding-top:60px;
     margin-top: 10px;
-    transition: all 0.5s;
+    /* transition: all 0.1s; */
     position: relative;
 }
 .navbar .description{
@@ -30,7 +30,7 @@
 
 .navbar i:hover .description{
     display:inline;
-    color:#07051a;
+    color:#3d3d3d;
     font-size:15px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     z-index:1;
@@ -38,7 +38,7 @@
     text-align:center;
     left:75px;
     top:60px;
-    background-color: white;
+    background-color: rgb(177, 177, 177);
     border-radius:0px 10px 10px 10px;
     padding:5px;
 }
@@ -50,4 +50,8 @@
 
 exit{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.sub_options{
+    display:none;
 }

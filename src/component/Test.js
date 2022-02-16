@@ -37,7 +37,7 @@ const Test = () => {
         <button>Maximize All</button>
         <button>Minimize All</button>
         </div>
-        <div className="status">Connected <i className="fa fa-check"></i></div>
+        <div className="status">Ready <i className="fa fa-check"></i></div>
         {cells.map((item) => <Cell key = {item} id={item} onFocusChange={onFocusChange} />)}
       </div>
     </div>

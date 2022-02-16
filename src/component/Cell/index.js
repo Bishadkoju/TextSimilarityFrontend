@@ -38,7 +38,6 @@ const Cell = ({ id, onFocusChange }) => {
           className="text-box"
           minRows={4}
           maxRows={8}
-          placeholder="Write somthing............."
         />
 
         <ul className="options">
@@ -62,7 +61,7 @@ const Cell = ({ id, onFocusChange }) => {
           </li>
         </ul>
       </div>
-      {!downArrow && <div className="output-cell">asdfsfe</div>}
+      {!downArrow && <div className="output-cell">Your output is here...</div>}
     </div>
   );
 };

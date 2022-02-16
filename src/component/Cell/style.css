@@ -6,12 +6,12 @@
     display:none;
 }
 
-li:hover .explain{
+/* li:hover .explain{
     display: inline;
-}
+} */
 
 .input-cell{
-    background-color: #2a283f;
+    background-color:#3c424b;
     padding-left: 10px;
     margin : 10px;
     align-items: center;
@@ -20,17 +20,18 @@ li:hover .explain{
 }
 
 .input-cell i{
-    border:2px solid white;
+    border:2px solid #abb2b2;
     padding:15px;
-    color:white;
+    color:#abb2b2;
     font-weight: 1000;
     font-size: large;
     border-radius:50%;
 }
 
 .input-cell i:hover{
-    color:#07051a;
-    background-color: #ffffff;
+    color:#3c424b;
+    background-color: #cfcfcf;
+    border:2px solid #cfcfcf;
 }
 
 .options{
@@ -46,7 +47,7 @@ li:hover .explain{
 
 .options i{
     font-size: 17.34999898989899px;
-    padding: 3px;
+    padding: 2px;
     margin: 0px 2px 0px 2px;
     border: 0px;
 }
@@ -56,9 +57,12 @@ li:hover .explain{
 }
 
 .output-cell {
-    background-color: #2a283f;
+    background-color: #181c24;
+    color:#abb2b2;
+    font-size: 15px;
     padding:10px;
-    margin : 10px;
+    margin :10px;
+    margin-top:-8px;
     align-items: center;
     transition: all 0.4s;
 }
@@ -77,16 +81,16 @@ li:hover .explain{
 }
 
 .text-box{
-    background-color: #07051a;
+    background-color: #181c24;
     top: 20%;
     width:100%;
     left:5%;
     line-height: 25px;
     outline: 0;
     border: 0;
-    font-size: 20px;
+    font-size: 15px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color:#f1f1f7;
+    color:#abb2bf;
     margin-left: 10px;
 }
 .input-cell textarea{
@@ -98,3 +102,4 @@ li:hover .explain{
     flex-grow: 1;
     flex-direction: column;
 }
+
