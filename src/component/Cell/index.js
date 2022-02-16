@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useImperativeHandle } from "react";
+import React, { useState, useImperativeHandle } from "react";
 import { useDispatch } from "react-redux";
 import { cellActions } from '../../actions/cellActions'
 import TextareaAutosize from "react-textarea-autosize";
-import Hotkeys from 'react-hot-keys'
 import "./style.css";
 
 const Cell = ({ id, onFocusChange }, ref) => {
@@ -51,12 +50,6 @@ const Cell = ({ id, onFocusChange }, ref) => {
     <div ref={ref} className="cell-container">
       <div className="input-cell">
         <i className="fa fa-play" onClick={runCell}></i>
-        <Hotkeys
-          keyName="shift+a,alt+s"
-          onKeyDown={() => console.log('down')}
-        >
-          <div style={{ padding: "50px" }}>asdfwef</div>
-        </Hotkeys>
         <TextareaAutosize
           onFocus={handleFocus}
           className="text-box"
