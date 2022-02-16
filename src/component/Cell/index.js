@@ -55,9 +55,7 @@ const Cell = ({ id, onFocusChange }, ref) => {
           className="text-box"
           minRows={4}
           maxRows={8}
-          placeholder="Write somthing............."
-          onKeyDown={handleKeyDown}
-          
+          onKeyDown={handleKeyDown} 
         />
 
         <ul className="options">
@@ -78,7 +76,7 @@ const Cell = ({ id, onFocusChange }, ref) => {
           </li>
         </ul>
       </div>
-      {showOutput && <div className="output-cell">asdfsfe</div>}
+      {showOutput && <div className="output-cell">Your output is here..</div>}
     </div>
   );
 };
