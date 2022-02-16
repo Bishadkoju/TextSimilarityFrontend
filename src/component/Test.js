@@ -30,11 +30,14 @@ const Test = () => {
     <div className="container">
       <Navbar />
       <div className="main-section">
+        <nav>
         <button onClick={addCell}>New Cell</button>
         <button>Delete All</button>
         <button>Run All</button>
         <button>Maximize All</button>
         <button>Minimize All</button>
+        </nav>
+        <div className="status">Connected <i className="fa fa-check"></i></div>
         {cells.map((item) => <Cell key = {item} id={item} onFocusChange={onFocusChange} />)}
       </div>
     </div>
