@@ -13,7 +13,7 @@ const Navbar = () => {
         <br />
         <i className="fa fa-file-import"></i>
         <br />
-        <i class="export"></i>
+        <i className="export"></i>
         <br />
         <i className="help"></i>
         <br />
