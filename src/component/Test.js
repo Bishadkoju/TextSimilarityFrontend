@@ -74,8 +74,9 @@ const Test = () => {
           />
         ))}
         {/* <Cell ref={cellsRef} id="asd" /> */}
-        <button onClick={() => console.log(cellsRef)}>test</button>
+      
       </div>
+      <div className="status">Ready <i className="fa fa-check"></i></div>
     </div>
   );
 };

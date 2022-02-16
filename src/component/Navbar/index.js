@@ -24,12 +24,6 @@ const Navbar = () => {
     <br />
     <i className="fa fa-file-export">
     <div className="description">Export</div>
-    <div className="sub_options">
-      <ul>
-        <li>CSV</li>
-        <li>PDF</li>
-      </ul>
-    </div>
     </i>
     <br />
     <i className="fa fa-info">
