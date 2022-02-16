@@ -15,7 +15,8 @@
 .navbar i{
     color:#07051a;
     font-size: 30px;
-    padding-top:70px;
+    padding-top:60px;
+    margin-top: 10px;
     transition: all 0.5s;
     position: relative;
 }
