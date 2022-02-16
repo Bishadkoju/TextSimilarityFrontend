@@ -44,6 +44,7 @@ a {
       margin-left:100px;
       margin-top:25px;
       flex-grow: 1;
+      z-index: 0;
   }
 
 
