@@ -41,6 +41,8 @@ a {
   .main-section{
       top:38%;
       height:60%;
+      margin-left:100px;
+      margin-top:25px;
       flex-grow: 1;
   }
 
@@ -56,7 +58,6 @@ a {
       left:21%;
       margin:0%;
       padding:10px 50px;
-      /* overflow-y: scroll; */
   }
 
   .button{
@@ -71,27 +72,37 @@ a {
     left:10%;
   }
 
-
   button{
-      margin:4px 3%;
+      border-radius:5px;
+      padding:2px 5px;
+      margin:10px 1%;
       color:#eead71;
       background-color:#282c34;
-      border:1px solid #282c34;
+      opacity: 80%;
+      border:0px;
+      border-right:2px solid rgb(238,173,113,0.3);
+      border-bottom:2px solid rgb(238,173,113,0.3);
+      border-radius:10px 0px;
       font-size: 18px;
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
 
   button:hover{
-      border:1px solid white;
+      background-color:#eead71;
+      color:#282c34;
+      transition:0.2s;
   }
 
   .status{
       position: absolute;
-      top:10px;
+      top:15px;
       right:20px;
       padding-top:4px;
       color:#c4c4c4;
+      background-color:#282c34;
+      padding:2px;
       font-size: 17px;
+      z-index:1;
       font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
   .status i{

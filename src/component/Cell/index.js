@@ -13,8 +13,8 @@ const Cell = ({ id, onFocusChange }, ref) => {
 
   useImperativeHandle(ref, () => ({
     runCell,
-    maximizeCell: ()=> setShowOutput(true),
-    minimizeCell: ()=> setShowOutput(false)
+    maximizeCell: () => setShowOutput(true),
+    minimizeCell: () => setShowOutput(false)
   }));
 
   const handleFocus = () => {
@@ -37,7 +37,7 @@ const Cell = ({ id, onFocusChange }, ref) => {
   }
 
   const handleKeyDown = (e) => {
-    if (e.keyCode === 13 && e.shiftKey){
+    if (e.keyCode === 13 && e.shiftKey) {
       e.preventDefault()
       runCell()
     }
@@ -55,7 +55,7 @@ const Cell = ({ id, onFocusChange }, ref) => {
           className="text-box"
           minRows={4}
           maxRows={8}
-          onKeyDown={handleKeyDown} 
+          onKeyDown={handleKeyDown}
         />
 
         <ul className="options">
@@ -76,7 +76,20 @@ const Cell = ({ id, onFocusChange }, ref) => {
           </li>
         </ul>
       </div>
-      {showOutput && <div className="output-cell">Your output is here..</div>}
+      {showOutput && <div className="output-cell">
+        <label class="radio-container">One
+          <input type="radio" name="radio" />
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Two
+          <input type="radio" name="radio" />
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Three
+          <input type="radio" name="radio" />
+          <span class="checkmark"></span>
+        </label>
+      </div>}
     </div>
   );
 };

@@ -58,12 +58,15 @@ const Test = () => {
   return (
     <div className="container">
       <Navbar />
-      <div className="main-section">
+      <nav>
         <button onClick={addCell}>New Cell</button>
         <button onClick={deleteAll}>Delete All</button>
         <button onClick={runAll}>Run All</button>
         <button onClick={maximizeAll}>Maximize All</button>
         <button onClick={minimizeAll}>Minimize All</button>
+      </nav>
+      <div className="main-section">
+        
         {cells.map((item, i) => (
           <Cell
             key={item.id}
