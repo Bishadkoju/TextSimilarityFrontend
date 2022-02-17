@@ -16,6 +16,7 @@ const initialState = [
     selectedResultIndex: 0,
   }
 ];
+
 const cellReducer = (state = initialState, action) => {
   switch (action.type) {
     case cellActionTypes.addCell: {
