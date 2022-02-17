@@ -1,38 +1,54 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHeart,
+  faFile,
+  faSave,
+  faFileImport,
+  faFileExport,
+  faInfo,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
 
 const Navbar = () => {
   return (
     <div className="navbar">
       <div className="navbar_container">
-        <i className="fa fa-heart">
+        <i>
+          <FontAwesomeIcon icon={faHeart} />
           <div className="description">Open</div>
         </i>
-        
-        <i className="fa fa-file">
+
+        <i>
+          <FontAwesomeIcon icon={faFile} />
           <div className="description">Open</div>
         </i>
-       
-        <i className="fa fa-save">
+
+        <i>
+          <FontAwesomeIcon icon={faSave} />
           <div className="description">Save</div>
         </i>
-       
-        <i className="fa fa-file-import">
+
+        <i>
+          <FontAwesomeIcon icon={faFileImport} />
           <div className="description">Import</div>
         </i>
-       
-        <i className="fa fa-file-export">
+
+        <i>
+          <FontAwesomeIcon icon={faFileExport} />
           <div className="description">Export</div>
         </i>
-        
-        <i className="fa fa-info">
+
+        <i>
+          <FontAwesomeIcon icon={faInfo} />
           <div className="description">Help</div>
         </i>
 
-        <i className="fa fa-right">X
+        <i>
+          <FontAwesomeIcon icon={faRightFromBracket} />
           <div className="description">Exit</div>
         </i>
-        
       </div>
     </div>
   );

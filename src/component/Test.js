@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import { cellActions } from "../actions/cellActions";
 import Navbar from "./Navbar";
@@ -66,7 +68,6 @@ const Test = () => {
         <button onClick={minimizeAll}>Minimize All</button>
       </nav>
       <div className="main-section">
-        
         {cells.map((item, i) => (
           <Cell
             key={item.id}
@@ -77,9 +78,13 @@ const Test = () => {
           />
         ))}
         {/* <Cell ref={cellsRef} id="asd" /> */}
-      
       </div>
-      <div className="status">Ready <i className="fa fa-check"></i></div>
+      <div className="status">
+        Ready{" "}
+        <i>
+          <FontAwesomeIcon icon={faCheck} />
+        </i>
+      </div>
     </div>
   );
 };

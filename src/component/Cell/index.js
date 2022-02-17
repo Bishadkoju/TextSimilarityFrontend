@@ -1,12 +1,21 @@
 import React, { useState, useImperativeHandle } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlay,
+  faTrash,
+  faArrowUp,
+  faArrowDown,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { cellActions } from '../../actions/cellActions'
+import { cellActions } from "../../actions/cellActions";
 import TextareaAutosize from "react-textarea-autosize";
 import "./style.css";
 
 const Cell = ({ id, onFocusChange }, ref) => {
   const [showOutput, setShowOutput] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const toggleDownButton = () => {
     setShowOutput(!showOutput);
   };
@@ -14,7 +23,7 @@ const Cell = ({ id, onFocusChange }, ref) => {
   useImperativeHandle(ref, () => ({
     runCell,
     maximizeCell: () => setShowOutput(true),
-    minimizeCell: () => setShowOutput(false)
+    minimizeCell: () => setShowOutput(false),
   }));
 
   const handleFocus = () => {
@@ -25,23 +34,23 @@ const Cell = ({ id, onFocusChange }, ref) => {
   };
 
   const deleteCell = () => {
-    dispatch(cellActions.deleteCell(id))
-  }
+    dispatch(cellActions.deleteCell(id));
+  };
 
   const moveCellUp = () => {
-    dispatch(cellActions.moveCellUp(id))
-  }
+    dispatch(cellActions.moveCellUp(id));
+  };
 
   const moveCellDown = () => {
-    dispatch(cellActions.moveCellDown(id))
-  }
+    dispatch(cellActions.moveCellDown(id));
+  };
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && e.shiftKey) {
-      e.preventDefault()
-      runCell()
+      e.preventDefault();
+      runCell();
     }
-  }
+  };
 
   const runCell = () => {
     console.log("Run " + id);
@@ -49,7 +58,10 @@ const Cell = ({ id, onFocusChange }, ref) => {
   return (
     <div ref={ref} className="cell-container">
       <div className="input-cell">
-        <i className="fa fa-play" onClick={runCell}></i>
+        <i onClick={runCell}>
+          <FontAwesomeIcon icon={faPlay} />
+        </i>
+
         <TextareaAutosize
           onFocus={handleFocus}
           className="text-box"
@@ -60,36 +72,46 @@ const Cell = ({ id, onFocusChange }, ref) => {
 
         <ul className="options">
           <li>
-            <i className="fa fa-arrow-up" onClick={moveCellUp}></i>
+            <i onClick={moveCellUp}>
+              <FontAwesomeIcon icon={faArrowUp} />
+            </i>
           </li>
           <li>
-            <i className="fa fa-arrow-down" onClick={moveCellDown}></i>{" "}
+            <i onClick={moveCellDown}>
+              <FontAwesomeIcon icon={faArrowDown} />
+            </i>{" "}
           </li>
           <li>
-            <i className="fa fa-trash" onClick={deleteCell}></i>{" "}
+            <i onClick={deleteCell}>
+              <FontAwesomeIcon icon={faTrash} />
+            </i>{" "}
           </li>
           <li>
-            <i
-              onClick={toggleDownButton}
-              className={`fa fa-eye${!showOutput ? "" : "-slash"} `}
-            ></i>
+            <i onClick={toggleDownButton}>
+              <FontAwesomeIcon icon={!showOutput ? faEye : faEyeSlash} />
+            </i>
           </li>
         </ul>
       </div>
-      {showOutput && <div className="output-cell">
-        <label class="radio-container">One
-          <input type="radio" name="radio" />
-          <span class="checkmark"></span>
-        </label>
-        <label class="radio-container">Two
-          <input type="radio" name="radio" />
-          <span class="checkmark"></span>
-        </label>
-        <label class="radio-container">Three
-          <input type="radio" name="radio" />
-          <span class="checkmark"></span>
-        </label>
-      </div>}
+      {showOutput && (
+        <div className="output-cell">
+          <label class="radio-container">
+            One
+            <input type="radio" name="radio" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-container">
+            Two
+            <input type="radio" name="radio" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="radio-container">
+            Three
+            <input type="radio" name="radio" />
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      )}
     </div>
   );
 };
