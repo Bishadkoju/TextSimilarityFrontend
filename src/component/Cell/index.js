@@ -73,22 +73,22 @@ const Cell = ({ id, onFocusChange }, ref) => {
         <ul className="options">
           <li>
             <i onClick={moveCellUp}>
-              <FontAwesomeIcon icon={faArrowUp} />
+              <FontAwesomeIcon icon={faArrowUp} className="options-icon"/>
             </i>
           </li>
           <li>
             <i onClick={moveCellDown}>
-              <FontAwesomeIcon icon={faArrowDown} />
+              <FontAwesomeIcon icon={faArrowDown} className="options-icon"/>
             </i>{" "}
           </li>
           <li>
             <i onClick={deleteCell}>
-              <FontAwesomeIcon icon={faTrash} />
+              <FontAwesomeIcon icon={faTrash} className="options-icon"/>
             </i>{" "}
           </li>
           <li>
             <i onClick={toggleDownButton}>
-              <FontAwesomeIcon icon={!showOutput ? faEye : faEyeSlash} />
+              <FontAwesomeIcon icon={!showOutput ? faEye : faEyeSlash} className="options-icon"/>
             </i>
           </li>
         </ul>

@@ -15,7 +15,7 @@
 .navbar i{
     color:#cfcfcf;
     font-size: 30px;
-    padding: 27px;
+    padding: 22px;
     margin-top: 10px;
     position: relative;
 }
@@ -44,10 +44,6 @@
 .navbar span{
     text-decoration: none;
     display: hidden;
-}
-
-exit{
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .sub_options{
