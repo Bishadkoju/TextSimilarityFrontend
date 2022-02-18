@@ -8,32 +8,6 @@ import { cellActions } from "../actions/cellActions";
 import Navbar from "./Navbar";
 import Cell from "./Cell";
 
-const ListShuffler = () => {
-  const [data, setData] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-  const shuffleList = () => {
-    const newData = [...data]
-    swapArrayLocs(newData,3,6)
-    setData(newData)
-  };
-  const swapArrayLocs = (arr, index1, index2) => {
-    [arr[index1], arr[index2]] = [arr[index2], arr[index1]]
-  }
-  
-
-  return (
-    <Flipper flipKey={data.join("")}>
-      <button onClick={shuffleList}> shuffle</button>
-      <ul className="list">
-        {data.map((d) => (
-          <Flipped key={d} flipId={d} spring="wobbly">
-            <li>{d}</li>
-          </Flipped>
-        ))}
-      </ul>
-    </Flipper>
-  );
-};
-
 // You can now get a ref directly to the DOM button:
 
 const Test = () => {
@@ -56,7 +30,10 @@ const Test = () => {
   };
 
   const deleteAll = () => {
-    dispatch(cellActions.deleteAll());
+    const res = window.confirm("Are you sure you want to delete all ?")
+    if (res) {
+      dispatch(cellActions.deleteAll());
+    }
   };
 
   const runAll = () => {

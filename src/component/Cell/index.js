@@ -1,20 +1,25 @@
 import React, { useState, useImperativeHandle } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlay,
   faTrash,
   faArrowUp,
   faArrowDown,
   faEye,
   faEyeSlash,
+  faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { cellActions } from "../../actions/cellActions";
 import TextareaAutosize from "react-textarea-autosize";
+
+import { cellActions } from "../../actions/cellActions";
 import "./style.css";
+import axiosInstance from "../../helpers/Axios";
 
 const Cell = ({ id, onFocusChange }, ref) => {
   const [showOutput, setShowOutput] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(0)
+  const [value, setValue] = useState("");
+  const [outputs, setOutputs] = useState([]);
   const dispatch = useDispatch();
   const toggleDownButton = () => {
     setShowOutput(!showOutput);
@@ -52,8 +57,18 @@ const Cell = ({ id, onFocusChange }, ref) => {
     }
   };
 
-  const runCell = () => {
+  const handleRadioChange = (e) => setSelectedOption(parseInt(e.target.value))
+
+  const runCell = async () => {
+    if (value==="") return
+    
     console.log("Run " + id);
+    const response = await axiosInstance.post("api/queryQuestion/", {
+      queryQuestion: value,
+    });
+    console.log(response.data);
+    setOutputs([ {id: 'asfdwefwe', question: value, similarity: 1},...response.data.map((item) => item)]);
+    setShowOutput(true)
   };
   return (
     <div ref={ref} className="cell-container">
@@ -67,49 +82,48 @@ const Cell = ({ id, onFocusChange }, ref) => {
           className="text-box"
           minRows={4}
           maxRows={8}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
+          autoFocus
         />
 
         <ul className="options">
           <li>
             <i onClick={moveCellUp}>
-              <FontAwesomeIcon icon={faArrowUp} className="options-icon"/>
+              <FontAwesomeIcon icon={faArrowUp} className="options-icon" />
             </i>
           </li>
           <li>
             <i onClick={moveCellDown}>
-              <FontAwesomeIcon icon={faArrowDown} className="options-icon"/>
+              <FontAwesomeIcon icon={faArrowDown} className="options-icon" />
             </i>{" "}
           </li>
           <li>
             <i onClick={deleteCell}>
-              <FontAwesomeIcon icon={faTrash} className="options-icon"/>
+              <FontAwesomeIcon icon={faTrash} className="options-icon" />
             </i>{" "}
           </li>
           <li>
             <i onClick={toggleDownButton}>
-              <FontAwesomeIcon icon={!showOutput ? faEye : faEyeSlash} className="options-icon"/>
+              <FontAwesomeIcon
+                icon={!showOutput ? faEye : faEyeSlash}
+                className="options-icon"
+              />
             </i>
           </li>
         </ul>
       </div>
       {showOutput && (
         <div className="output-cell">
-          <label class="radio-container">
-            One
-            <input type="radio" name="radio" />
-            <span class="checkmark"></span>
-          </label>
-          <label class="radio-container">
-            Two
-            <input type="radio" name="radio" />
-            <span class="checkmark"></span>
-          </label>
-          <label class="radio-container">
-            Three
-            <input type="radio" name="radio" />
-            <span class="checkmark"></span>
-          </label>
+          {outputs.map((item,i) => (
+            <label className="radio-container">
+              {item.question} {i===0?"(Query Question)" : `(${parseFloat(item.similarity).toFixed(4)})`}
+              <input type="radio" value={i} name={`output-${id}`} onChange={handleRadioChange} checked={selectedOption === i}/>
+              <span className="checkmark"></span>
+            </label>
+          ))}
+         
         </div>
       )}
     </div>

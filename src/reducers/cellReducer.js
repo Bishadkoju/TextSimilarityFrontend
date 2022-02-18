@@ -8,12 +8,6 @@ const initialState = [
     results: [],
     isResultSelected: false,
     selectedResultIndex: 0,
-  },{
-    id: nanoid(),
-    value: "",
-    results: [],
-    isResultSelected: false,
-    selectedResultIndex: 0,
   }
 ];
 
