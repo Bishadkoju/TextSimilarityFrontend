@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Flipper, Flipped } from "react-flip-toolkit";
 
 import { cellActions } from "../actions/cellActions";
 import Navbar from "./Navbar";
 import Cell from "./Cell";
+import Status from "./Status";
 
 // You can now get a ref directly to the DOM button:
 
@@ -26,7 +25,17 @@ const Test = () => {
   };
 
   const addCell = () => {
-    dispatch(cellActions.addCell(focus));
+    const state = {
+      value: "hello everyone",
+      results: [],
+      selectedResultIndex: 0
+    }
+    dispatch(cellActions.addCell(state))
+    console.log('hello')
+  }
+
+  const addEmptyCell = () => {
+    dispatch(cellActions.addEmptyCell(focus));
   };
 
   const deleteAll = () => {
@@ -60,18 +69,21 @@ const Test = () => {
     }
   };
 
+  
+
   return (
     <div className="container">
       <Navbar />
       <nav>
-        <button onClick={addCell}>New Cell</button>
+        <button onClick={addEmptyCell}>New Cell</button>
         <button onClick={deleteAll}>Delete All</button>
         <button onClick={runAll}>Run All</button>
         <button onClick={maximizeAll}>Maximize All</button>
         <button onClick={minimizeAll}>Minimize All</button>
+        <Status />
       </nav>
       <div className="main-section">
-        <Flipper flipKey={cells}>
+        <Flipper flipKey={cells} spring="gentle">
           {cells.map((item) => (
             <Flipped key={item.id} flipId={item.id}>
               <div>
@@ -87,13 +99,6 @@ const Test = () => {
           ))}
         </Flipper>
 
-        {/* <Cell ref={cellsRef} id="asd" /> */}
-      </div>
-      <div className="status">
-        Ready{" "}
-        <i>
-          <FontAwesomeIcon icon={faCheck} />
-        </i>
       </div>
     </div>
   );

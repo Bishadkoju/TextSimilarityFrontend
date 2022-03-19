@@ -109,3 +109,8 @@ a {
   .status i{
       color:rgb(2, 255, 2);
   }
+
+  @keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+  }

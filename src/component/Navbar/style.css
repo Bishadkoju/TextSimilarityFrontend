@@ -59,3 +59,8 @@ nav{
     margin-top:-8px;
     z-index: 1;
 }
+
+.logo{
+    width: 40px;
+    height: 40px;
+}

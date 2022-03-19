@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle } from "react";
+import React, { useState, useEffect, useImperativeHandle } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
@@ -10,20 +10,27 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import TextareaAutosize from "react-textarea-autosize";
+import { nanoid } from "nanoid";
 
 import { cellActions } from "../../actions/cellActions";
 import "./style.css";
 import axiosInstance from "../../helpers/Axios";
 
-const Cell = ({ id, onFocusChange }, ref) => {
+const Cell = ({ id, onFocusChange, item }, ref) => {
   const [showOutput, setShowOutput] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(0)
+  const [selectedResultIndex, setSelectedResultIndex] = useState(0)
   const [value, setValue] = useState("");
-  const [outputs, setOutputs] = useState([]);
+  const [results, setResults] = useState([]);
   const dispatch = useDispatch();
   const toggleDownButton = () => {
     setShowOutput(!showOutput);
   };
+
+  useEffect(() => {
+    console.log(item)
+    setValue(item.value)
+    setResults(item.results)
+  },[])
 
   useImperativeHandle(ref, () => ({
     runCell,
@@ -37,6 +44,15 @@ const Cell = ({ id, onFocusChange }, ref) => {
       focus: true,
     });
   };
+
+  const updateCell = (state) => {
+    const newState = {
+      ...state,
+      id
+    }
+    dispatch(cellActions.updateCell(newState))
+  }
+
 
   const deleteCell = () => {
     dispatch(cellActions.deleteCell(id));
@@ -57,7 +73,12 @@ const Cell = ({ id, onFocusChange }, ref) => {
     }
   };
 
-  const handleRadioChange = (e) => setSelectedOption(parseInt(e.target.value))
+  const handleRadioChange = (e) => {
+    setSelectedResultIndex(parseInt(e.target.value))
+    updateCell({selectedResultIndex: parseInt(e.target.value)})
+  }
+
+  const handleBlur = () => updateCell({value})
 
   const runCell = async () => {
     if (value==="") return
@@ -67,8 +88,10 @@ const Cell = ({ id, onFocusChange }, ref) => {
       queryQuestion: value,
     });
     console.log(response.data);
-    setOutputs([ {id: 'asfdwefwe', question: value, similarity: 1},...response.data.map((item) => item)]);
+    const results = [ {id: nanoid(), question: value, similarity: 1},...response.data.map((item) => item)]
+    setResults(results);
     setShowOutput(true)
+    updateCell({value, results})
   };
   return (
     <div ref={ref} className="cell-container">
@@ -79,6 +102,7 @@ const Cell = ({ id, onFocusChange }, ref) => {
 
         <TextareaAutosize
           onFocus={handleFocus}
+          onBlur={handleBlur}
           className="text-box"
           minRows={4}
           maxRows={8}
@@ -116,10 +140,10 @@ const Cell = ({ id, onFocusChange }, ref) => {
       </div>
       {showOutput && (
         <div className="output-cell">
-          {outputs.map((item,i) => (
-            <label className="radio-container">
+          {results.map((item,i) => (
+            <label key={i} className="radio-container">
               {item.question} {i===0?"(Query Question)" : `(${parseFloat(item.similarity).toFixed(4)})`}
-              <input type="radio" value={i} name={`output-${id}`} onChange={handleRadioChange} checked={selectedOption === i}/>
+              <input type="radio" value={i} name={`output-${id}`} onChange={handleRadioChange} checked={selectedResultIndex === i}/>
               <span className="checkmark"></span>
             </label>
           ))}
