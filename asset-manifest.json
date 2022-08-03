@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/TextSimilarityFrontend/static/css/main.2c9b5999.css",
+    "main.js": "/TextSimilarityFrontend/static/js/main.85519482.js",
+    "index.html": "/TextSimilarityFrontend/index.html",
+    "main.2c9b5999.css.map": "/TextSimilarityFrontend/static/css/main.2c9b5999.css.map",
+    "main.85519482.js.map": "/TextSimilarityFrontend/static/js/main.85519482.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2c9b5999.css",
+    "static/js/main.85519482.js"
+  ]
+}
