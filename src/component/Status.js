@@ -34,7 +34,7 @@ const Status = () => {
     },
   };
   return (
-    <div className="status">
+    <div className="status" title="Server Connection Status">
       {icons[status].text} <i>{icons[status].icon}</i>
     </div>
   );
