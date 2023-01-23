@@ -2,6 +2,7 @@ import React, { useState, useImperativeHandle } from "react";
 import { useDispatch } from "react-redux";
 import { cellActions } from '../../actions/cellActions'
 import TextareaAutosize from "react-textarea-autosize";
+import Preview from "../Preview";
 import "./style.css";
 
 const Cell = ({ id, onFocusChange }, ref) => {
@@ -76,7 +77,11 @@ const Cell = ({ id, onFocusChange }, ref) => {
           </li>
         </ul>
       </div>
-      {showOutput && <div className="output-cell">
+      <div className ="output-cell">
+        <h1>Hy There!</h1>
+        <Preview/>
+      </div>
+      {/* {showOutput && <div className="output-cell">
         <label class="radio-container">One
           <input type="radio" name="radio" />
           <span class="checkmark"></span>
@@ -89,7 +94,7 @@ const Cell = ({ id, onFocusChange }, ref) => {
           <input type="radio" name="radio" />
           <span class="checkmark"></span>
         </label>
-      </div>}
+      </div>} */}
     </div>
   );
 };
