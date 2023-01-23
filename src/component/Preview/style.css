@@ -1,0 +1,10 @@
+.preview-button{
+    text-align: right;
+}
+
+.popup{
+    background-color: white;
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+}

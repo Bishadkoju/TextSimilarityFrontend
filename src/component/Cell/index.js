@@ -13,6 +13,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { nanoid } from "nanoid";
 
 import { cellActions } from "../../actions/cellActions";
+import Preview from "../Preview";
 import "./style.css";
 import axiosInstance from "../../helpers/Axios";
 
@@ -138,18 +139,24 @@ const Cell = ({ id, onFocusChange, item }, ref) => {
           </li>
         </ul>
       </div>
-      {showOutput && (
-        <div className="output-cell">
-          {results.map((item,i) => (
-            <label key={i} className="radio-container">
-              {item.question} {i===0?"(Query Question)" : `(${parseFloat(item.similarity).toFixed(4)})`}
-              <input type="radio" value={i} name={`output-${id}`} onChange={handleRadioChange} checked={selectedResultIndex === i}/>
-              <span className="checkmark"></span>
-            </label>
-          ))}
-         
-        </div>
-      )}
+      <div className ="output-cell">
+        <h1>Hy There!</h1>
+        <Preview/>
+      </div>
+      {/* {showOutput && <div className="output-cell">
+        <label class="radio-container">One
+          <input type="radio" name="radio" />
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Two
+          <input type="radio" name="radio" />
+          <span class="checkmark"></span>
+        </label>
+        <label class="radio-container">Three
+          <input type="radio" name="radio" />
+          <span class="checkmark"></span>
+        </label>
+      </div>} */}
     </div>
   );
 };
