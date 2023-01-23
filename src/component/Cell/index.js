@@ -1,21 +1,42 @@
-import React, { useState, useImperativeHandle } from "react";
+import React, { useState, useEffect, useImperativeHandle } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrash,
+  faArrowUp,
+  faArrowDown,
+  faEye,
+  faEyeSlash,
+  faPlay,
+} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { cellActions } from '../../actions/cellActions'
 import TextareaAutosize from "react-textarea-autosize";
+import { nanoid } from "nanoid";
+
+import { cellActions } from "../../actions/cellActions";
 import Preview from "../Preview";
 import "./style.css";
+import axiosInstance from "../../helpers/Axios";
 
-const Cell = ({ id, onFocusChange }, ref) => {
+const Cell = ({ id, onFocusChange, item }, ref) => {
   const [showOutput, setShowOutput] = useState(false);
-  const dispatch = useDispatch()
+  const [selectedResultIndex, setSelectedResultIndex] = useState(0)
+  const [value, setValue] = useState("");
+  const [results, setResults] = useState([]);
+  const dispatch = useDispatch();
   const toggleDownButton = () => {
     setShowOutput(!showOutput);
   };
 
+  useEffect(() => {
+    console.log(item)
+    setValue(item.value)
+    setResults(item.results)
+  },[])
+
   useImperativeHandle(ref, () => ({
     runCell,
     maximizeCell: () => setShowOutput(true),
-    minimizeCell: () => setShowOutput(false)
+    minimizeCell: () => setShowOutput(false),
   }));
 
   const handleFocus = () => {
@@ -25,55 +46,96 @@ const Cell = ({ id, onFocusChange }, ref) => {
     });
   };
 
-  const deleteCell = () => {
-    dispatch(cellActions.deleteCell(id))
+  const updateCell = (state) => {
+    const newState = {
+      ...state,
+      id
+    }
+    dispatch(cellActions.updateCell(newState))
   }
+
+
+  const deleteCell = () => {
+    dispatch(cellActions.deleteCell(id));
+  };
 
   const moveCellUp = () => {
-    dispatch(cellActions.moveCellUp(id))
-  }
+    dispatch(cellActions.moveCellUp(id));
+  };
 
   const moveCellDown = () => {
-    dispatch(cellActions.moveCellDown(id))
-  }
+    dispatch(cellActions.moveCellDown(id));
+  };
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && e.shiftKey) {
-      e.preventDefault()
-      runCell()
+      e.preventDefault();
+      runCell();
     }
+  };
+
+  const handleRadioChange = (e) => {
+    setSelectedResultIndex(parseInt(e.target.value))
+    updateCell({selectedResultIndex: parseInt(e.target.value)})
   }
 
-  const runCell = () => {
+  const handleBlur = () => updateCell({value})
+
+  const runCell = async () => {
+    if (value==="") return
+    
     console.log("Run " + id);
+    const response = await axiosInstance.post("api/queryQuestion/", {
+      queryQuestion: value,
+    });
+    console.log(response.data);
+    const results = [ {id: nanoid(), question: value, similarity: 1},...response.data.map((item) => item)]
+    setResults(results);
+    setShowOutput(true)
+    updateCell({value, results})
   };
   return (
     <div ref={ref} className="cell-container">
       <div className="input-cell">
-        <i className="fa fa-play" onClick={runCell}></i>
+        <i onClick={runCell}>
+          <FontAwesomeIcon icon={faPlay} />
+        </i>
+
         <TextareaAutosize
           onFocus={handleFocus}
+          onBlur={handleBlur}
           className="text-box"
           minRows={4}
           maxRows={8}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
+          autoFocus
         />
 
         <ul className="options">
           <li>
-            <i className="fa fa-arrow-up" onClick={moveCellUp}></i>
+            <i onClick={moveCellUp}>
+              <FontAwesomeIcon icon={faArrowUp} className="options-icon" />
+            </i>
           </li>
           <li>
-            <i className="fa fa-arrow-down" onClick={moveCellDown}></i>{" "}
+            <i onClick={moveCellDown}>
+              <FontAwesomeIcon icon={faArrowDown} className="options-icon" />
+            </i>{" "}
           </li>
           <li>
-            <i className="fa fa-trash" onClick={deleteCell}></i>{" "}
+            <i onClick={deleteCell}>
+              <FontAwesomeIcon icon={faTrash} className="options-icon" />
+            </i>{" "}
           </li>
           <li>
-            <i
-              onClick={toggleDownButton}
-              className={`fa fa-eye${!showOutput ? "" : "-slash"} `}
-            ></i>
+            <i onClick={toggleDownButton}>
+              <FontAwesomeIcon
+                icon={!showOutput ? faEye : faEyeSlash}
+                className="options-icon"
+              />
+            </i>
           </li>
         </ul>
       </div>
