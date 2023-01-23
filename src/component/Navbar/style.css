@@ -15,7 +15,7 @@
 .navbar i{
     color:#cfcfcf;
     font-size: 30px;
-    padding: 27px;
+    padding: 22px;
     margin-top: 10px;
     position: relative;
 }
@@ -46,10 +46,6 @@
     display: hidden;
 }
 
-exit{
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-}
-
 .sub_options{
     display:none;
 }
@@ -62,4 +58,9 @@ nav{
     background-color: #282c34;
     margin-top:-8px;
     z-index: 1;
+}
+
+.logo{
+    width: 40px;
+    height: 40px;
 }

@@ -1,24 +1,36 @@
-import React, { useState, useImperativeHandle } from "react";
+import React, { useState, useEffect, useImperativeHandle } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlay,
   faTrash,
   faArrowUp,
   faArrowDown,
   faEye,
   faEyeSlash,
+  faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { cellActions } from "../../actions/cellActions";
 import TextareaAutosize from "react-textarea-autosize";
-import "./style.css";
+import { nanoid } from "nanoid";
 
-const Cell = ({ id, onFocusChange }, ref) => {
+import { cellActions } from "../../actions/cellActions";
+import "./style.css";
+import axiosInstance from "../../helpers/Axios";
+
+const Cell = ({ id, onFocusChange, item }, ref) => {
   const [showOutput, setShowOutput] = useState(false);
+  const [selectedResultIndex, setSelectedResultIndex] = useState(0)
+  const [value, setValue] = useState("");
+  const [results, setResults] = useState([]);
   const dispatch = useDispatch();
   const toggleDownButton = () => {
     setShowOutput(!showOutput);
   };
+
+  useEffect(() => {
+    console.log(item)
+    setValue(item.value)
+    setResults(item.results)
+  },[])
 
   useImperativeHandle(ref, () => ({
     runCell,
@@ -32,6 +44,15 @@ const Cell = ({ id, onFocusChange }, ref) => {
       focus: true,
     });
   };
+
+  const updateCell = (state) => {
+    const newState = {
+      ...state,
+      id
+    }
+    dispatch(cellActions.updateCell(newState))
+  }
+
 
   const deleteCell = () => {
     dispatch(cellActions.deleteCell(id));
@@ -52,8 +73,25 @@ const Cell = ({ id, onFocusChange }, ref) => {
     }
   };
 
-  const runCell = () => {
+  const handleRadioChange = (e) => {
+    setSelectedResultIndex(parseInt(e.target.value))
+    updateCell({selectedResultIndex: parseInt(e.target.value)})
+  }
+
+  const handleBlur = () => updateCell({value})
+
+  const runCell = async () => {
+    if (value==="") return
+    
     console.log("Run " + id);
+    const response = await axiosInstance.post("api/queryQuestion/", {
+      queryQuestion: value,
+    });
+    console.log(response.data);
+    const results = [ {id: nanoid(), question: value, similarity: 1},...response.data.map((item) => item)]
+    setResults(results);
+    setShowOutput(true)
+    updateCell({value, results})
   };
   return (
     <div ref={ref} className="cell-container">
@@ -64,52 +102,52 @@ const Cell = ({ id, onFocusChange }, ref) => {
 
         <TextareaAutosize
           onFocus={handleFocus}
+          onBlur={handleBlur}
           className="text-box"
           minRows={4}
           maxRows={8}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
+          autoFocus
         />
 
         <ul className="options">
           <li>
             <i onClick={moveCellUp}>
-              <FontAwesomeIcon icon={faArrowUp} />
+              <FontAwesomeIcon icon={faArrowUp} className="options-icon" />
             </i>
           </li>
           <li>
             <i onClick={moveCellDown}>
-              <FontAwesomeIcon icon={faArrowDown} />
+              <FontAwesomeIcon icon={faArrowDown} className="options-icon" />
             </i>{" "}
           </li>
           <li>
             <i onClick={deleteCell}>
-              <FontAwesomeIcon icon={faTrash} />
+              <FontAwesomeIcon icon={faTrash} className="options-icon" />
             </i>{" "}
           </li>
           <li>
             <i onClick={toggleDownButton}>
-              <FontAwesomeIcon icon={!showOutput ? faEye : faEyeSlash} />
+              <FontAwesomeIcon
+                icon={!showOutput ? faEye : faEyeSlash}
+                className="options-icon"
+              />
             </i>
           </li>
         </ul>
       </div>
       {showOutput && (
         <div className="output-cell">
-          <label class="radio-container">
-            One
-            <input type="radio" name="radio" />
-            <span class="checkmark"></span>
-          </label>
-          <label class="radio-container">
-            Two
-            <input type="radio" name="radio" />
-            <span class="checkmark"></span>
-          </label>
-          <label class="radio-container">
-            Three
-            <input type="radio" name="radio" />
-            <span class="checkmark"></span>
-          </label>
+          {results.map((item,i) => (
+            <label key={i} className="radio-container">
+              {item.question} {i===0?"(Query Question)" : `(${parseFloat(item.similarity).toFixed(4)})`}
+              <input type="radio" value={i} name={`output-${id}`} onChange={handleRadioChange} checked={selectedResultIndex === i}/>
+              <span className="checkmark"></span>
+            </label>
+          ))}
+         
         </div>
       )}
     </div>
